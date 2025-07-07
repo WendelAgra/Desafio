@@ -1,0 +1,30 @@
+// Este bloco configura o cliente Prisma que você usa no seu código
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Este bloco configura a conexão com o seu banco de dados,
+// lendo a URL do arquivo .env
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo para a tabela de Usuários
+model User {
+  id        String   @id @default(uuid())
+  name      String?
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+// Modelo para a tabela de Veículos
+model Vehicle {
+  id        String    @id @default(uuid())
+  name      String
+  plate     String    @unique
+  status    Boolean   @default(true) // true = ativo, false = inativo
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
